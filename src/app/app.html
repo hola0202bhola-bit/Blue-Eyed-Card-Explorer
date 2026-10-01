@@ -1,0 +1,17 @@
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="Blue-Eyes Card Explorer, inicio">
+    <span class="brand-mark" aria-hidden="true">BE</span>
+    <span><strong>Blue-Eyes</strong><small>Card Explorer</small></span>
+  </a>
+  <nav aria-label="Secciones principales"><a href="#search">Buscar</a><a href="#collection">Colección</a></nav>
+</header>
+<main id="top">
+  <section class="intro" aria-labelledby="page-title">
+    <div><p class="eyebrow">Base de datos YGOPRODeck</p><h1 id="page-title">Encuentra tu próxima carta legendaria.</h1></div>
+    <p class="intro-copy">Busca por nombre o explora la colección Blue-Eyes y sus impresiones oficiales. Los resultados llegan directamente de la API.</p>
+  </section>
+  <app-card-search id="search" (cardSelected)="openCard($event)" />
+  <app-blue-eyes-collection id="collection" (cardSelected)="openCard($event)" />
+</main>
+<footer><p>Datos e imágenes proporcionados por YGOPRODeck.</p></footer>
+@if (selectedCard(); as card) { <app-card-detail [card]="card" (closed)="closeCard()" /> }

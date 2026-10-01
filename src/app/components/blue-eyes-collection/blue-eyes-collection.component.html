@@ -1,0 +1,23 @@
+<section aria-labelledby="collection-title">
+  <div class="collection-heading">
+    <div><p class="kicker">Arquetipo en vivo</p><h2 id="collection-title">Blue-Eyes Collection</h2></div>
+    @if (status() === 'success') {
+      <label class="filter"><span>Filtrar por expansión</span><select (change)="selectExpansion($event)">
+        <option value="">Todas las expansiones</option>
+        @for (expansion of expansions(); track expansion) { <option [value]="expansion">{{ expansion }}</option> }
+      </select></label>
+    }
+  </div>
+
+  @if (status() === 'success') {
+    <div class="collection-meta"><span>{{ filteredCards().length }} cartas</span><span>{{ expansions().length }} expansiones únicas</span></div>
+    @if (filteredCards().length > 0) {
+      <app-card-grid [cards]="filteredCards()" (cardSelected)="cardSelected.emit($event)" />
+    } @else {
+      <app-status-message status="empty" emptyMessage="Ninguna carta de la colección aparece en esa expansión." />
+    }
+  } @else {
+    <app-status-message [status]="status()" emptyMessage="La API no devolvió cartas para el arquetipo Blue-Eyes." />
+    @if (status() === 'error') { <button class="retry" type="button" (click)="loadCollection()">Reintentar</button> }
+  }
+</section>

@@ -1,0 +1,1 @@
+<div class="grid">@for (card of cards(); track card.id) { <app-card-tile [card]="card" (selected)="cardSelected.emit($event)" /> }</div>

@@ -1,0 +1,5 @@
+@switch (status()) {
+  @case ('loading') { <div class="status loading" role="status"><span class="spinner" aria-hidden="true"></span><span>Consultando el archivo de cartas…</span></div> }
+  @case ('empty') { <div class="status" role="status"><strong>Sin resultados</strong><span>{{ emptyMessage() }}</span></div> }
+  @case ('error') { <div class="status error" role="alert"><strong>No pudimos conectar con YGOPRODeck</strong><span>Revisa tu conexión e inténtalo de nuevo.</span></div> }
+}

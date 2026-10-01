@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');
+:root {
+  --body: 'Manrope', system-ui, sans-serif;
+  --display: 'Space Grotesk', system-ui, sans-serif;
+  --bg: #030a18;
+  --surface: #071329;
+  --text: #f5f9ff;
+  --muted: #9babc5;
+  --accent: #62b4ff;
+  --line: rgba(126, 178, 242, .2);
+  --shadow: 0 24px 70px rgba(0, 0, 0, .28);
+  color-scheme: dark;
+  font-family: var(--body);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body { margin: 0; min-width: 320px; color: var(--text); background: radial-gradient(circle at 75% 0%, rgba(22, 99, 210, .22), transparent 32rem), radial-gradient(circle at 0% 55%, rgba(25, 91, 177, .11), transparent 28rem), var(--bg); }
+button, input, select { font: inherit; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.section-anchor { scroll-margin-top: 6rem; }
+::selection { color: #031126; background: var(--accent); }

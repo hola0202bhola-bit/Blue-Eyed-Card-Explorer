@@ -1,0 +1,22 @@
+<section class="panel" aria-labelledby="search-title">
+  <div class="section-heading">
+    <div><p class="kicker">Buscador</p><h2 id="search-title">Busca cualquier carta</h2></div>
+    <p>Escribe al menos dos caracteres. La consulta espera una pausa breve antes de ejecutarse.</p>
+  </div>
+
+  <label class="search-box">
+    <span class="sr-only">Nombre parcial de la carta</span>
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+    <input type="search" placeholder="Ej. dragon, magician, kuriboh…" autocomplete="off" (input)="onInput($event)" />
+    <span class="shortcut" aria-hidden="true">API</span>
+  </label>
+
+  @if (status() === 'idle') {
+    <div class="search-hint"><span>⌕</span><p>Los resultados aparecerán aquí sin recargar la página.</p></div>
+  } @else if (status() === 'success') {
+    <div class="result-meta"><strong>{{ cards().length }}</strong> resultados para “{{ lastTerm() }}”</div>
+    <app-card-grid [cards]="cards()" (cardSelected)="cardSelected.emit($event)" />
+  } @else {
+    <app-status-message [status]="status()" />
+  }
+</section>

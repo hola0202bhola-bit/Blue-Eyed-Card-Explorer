@@ -1,0 +1,6 @@
+.status { min-height: 9rem; display: grid; place-content: center; gap: .45rem; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 1.25rem; background: rgba(8, 21, 49, .55); }
+.status strong { color: var(--text); font-size: 1.1rem; }
+.loading { grid-auto-flow: column; align-items: center; }
+.spinner { width: 1.35rem; height: 1.35rem; border: 2px solid rgba(123, 188, 255, .25); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+.error { border-color: rgba(255, 125, 137, .45); }
+@keyframes spin { to { transform: rotate(360deg); } }

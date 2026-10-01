@@ -1,0 +1,9 @@
+<article class="card-tile"><button type="button" (click)="selectCard()" [attr.aria-label]="'Ver detalle de ' + card().name">
+  <div class="image-wrap"><img [src]="card().card_images[0].image_url_small" [alt]="card().name" loading="lazy" /></div>
+  <div class="content"><p class="type">{{ card().type }}</p><h3>{{ card().name }}</h3><div class="facts">
+    @if (card().attribute) { <span>{{ card().attribute }}</span> }
+    @if (card().level !== undefined) { <span>Nivel {{ card().level }}</span> }
+    @if (card().atk !== undefined) { <span>ATK {{ card().atk }}</span> }
+    @if (card().def !== undefined) { <span>DEF {{ card().def }}</span> }
+  </div><span class="detail-link">Ver detalle</span></div>
+</button></article>

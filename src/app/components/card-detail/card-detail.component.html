@@ -1,0 +1,31 @@
+<div class="backdrop" (click)="closed.emit()" aria-hidden="true"></div>
+<section class="detail" role="dialog" aria-modal="true" [attr.aria-labelledby]="'card-title-' + card().id">
+  <button class="close" type="button" aria-label="Cerrar detalle" (click)="closed.emit()">×</button>
+  <div class="top">
+    <div class="art"><img [src]="card().card_images[0].image_url" [alt]="card().name" /></div>
+    <div class="summary">
+      <p class="type">{{ card().type }}</p>
+      <h2 [id]="'card-title-' + card().id">{{ card().name }}</h2>
+      <div class="facts">
+        @if (card().attribute) { <span>{{ card().attribute }}</span> }
+        @if (card().level !== undefined) { <span>Nivel {{ card().level }}</span> }
+        @if (card().atk !== undefined) { <span>ATK <strong>{{ card().atk }}</strong></span> }
+        @if (card().def !== undefined) { <span>DEF <strong>{{ card().def }}</strong></span> }
+      </div>
+      <div class="copy"><h3>Descripción</h3><p>{{ card().desc }}</p></div>
+      <div class="archetype"><span>Arquetipo</span><strong>{{ card().archetype || 'Sin arquetipo' }}</strong></div>
+    </div>
+  </div>
+
+  <div class="printings">
+    <div class="printing-heading"><h3>Impresiones</h3><span>{{ card().card_sets?.length || 0 }} registradas</span></div>
+    @if (card().card_sets?.length) {
+      <div class="table-wrap"><table>
+        <thead><tr><th>Expansión</th><th>Código</th><th>Rareza</th><th>Precio</th></tr></thead>
+        <tbody>@for (printing of card().card_sets; track printing.set_code + printing.set_rarity) {
+          <tr><td>{{ printing.set_name }}</td><td><code>{{ printing.set_code }}</code></td><td>{{ printing.set_rarity }}</td><td>${{ printing.set_price }}</td></tr>
+        }</tbody>
+      </table></div>
+    } @else { <p class="no-printings">No hay impresiones registradas para esta carta.</p> }
+  </div>
+</section>
