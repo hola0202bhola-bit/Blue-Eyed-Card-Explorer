@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, inject, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, of, Subject, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { RequestStatus, YgoCard } from '../../models/interfaces/card.interface';
 import { YgoprodeckService } from '../../services/ygoprodeck.service';
 import { CardGridComponent } from '../card-grid/card-grid.component';
@@ -32,22 +32,22 @@ export class CardSearchComponent {
   constructor() {
     this.searchTerms.pipe(
       map((term) => term.trim()),
+      distinctUntilChanged(),
       tap((term) => {
         this.lastTerm.set(term);
-        if (term.length < 2) {
-          this.cards.set([]);
-          this.status.set('idle');
-        }
+        this.cards.set([]);
+        this.status.set(term.length < 2 ? 'idle' : 'loading');
       }),
-      filter((term) => term.length >= 2),
       debounceTime(450),
-      distinctUntilChanged(),
-      tap(() => this.status.set('loading')),
-      switchMap((term) => this.service.searchCards(term).pipe(
+      switchMap((term) => term.length < 2
+        ? of({ cards: [], status: 'idle' } satisfies SearchResult)
+        : this.service.searchCards(term).pipe(
+        // Cancel immediately on a changed input, including clearing the search.
+        takeUntil(this.searchTerms.pipe(filter((nextTerm) => nextTerm.trim() !== term))),
         map((cards): SearchResult => ({ cards, status: cards.length > 0 ? 'success' : 'empty' })),
         catchError((error: unknown) => of({
           cards: [],
-          status: error instanceof HttpErrorResponse && error.status === 400 ? 'empty' : 'error',
+          status: this.isNoResults(error) ? 'empty' : 'error',
         } satisfies SearchResult)),
       )),
       takeUntilDestroyed(this.destroyRef),
@@ -55,6 +55,13 @@ export class CardSearchComponent {
       this.cards.set(result.cards);
       this.status.set(result.status);
     });
+  }
+
+  private isNoResults(error: unknown): boolean {
+    if (!(error instanceof HttpErrorResponse) || error.status !== 400) { return false; }
+    const body: unknown = error.error;
+    return typeof body === 'object' && body !== null && 'error' in body &&
+      typeof body.error === 'string' && /no card matching/i.test(body.error);
   }
 
   protected onInput(event: Event): void {

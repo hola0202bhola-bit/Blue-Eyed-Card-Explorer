@@ -18,22 +18,11 @@ export class BlueEyesCollectionComponent implements OnInit {
 
   protected readonly cards = signal<readonly YgoCard[]>([]);
   protected readonly status = signal<RequestStatus>('loading');
-  protected readonly selectedSet = signal('');
   protected readonly expansions = computed(() => Array.from(new Set(
     this.cards().flatMap((card) => (card.card_sets ?? []).map((set) => set.set_name)),
   )).sort((a, b) => a.localeCompare(b)));
-  protected readonly filteredCards = computed(() => {
-    const setName = this.selectedSet();
-    return setName
-      ? this.cards().filter((card) => (card.card_sets ?? []).some((set) => set.set_name === setName))
-      : this.cards();
-  });
 
   ngOnInit(): void { this.loadCollection(); }
-
-  protected selectExpansion(event: Event): void {
-    if (event.target instanceof HTMLSelectElement) { this.selectedSet.set(event.target.value); }
-  }
 
   protected loadCollection(): void {
     this.status.set('loading');

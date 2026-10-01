@@ -1,11 +1,9 @@
 :host { display: block; }
 section { padding-top: clamp(3.5rem, 7vw, 6rem); }
-.collection-heading { display: grid; grid-template-columns: 1fr minmax(16rem, 25rem); align-items: end; gap: 2rem; margin-bottom: 1.25rem; }
+.collection-heading { margin-bottom: 1.25rem; }
 .kicker { margin: 0 0 .35rem; color: var(--accent); font-size: .76rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
 h2 { margin: 0; font: 700 clamp(2rem, 5vw, 3.3rem)/1 var(--display); }
-.filter { display: grid; gap: .45rem; color: var(--muted); font-size: .78rem; font-weight: 700; }
-select { min-height: 3rem; width: 100%; padding: 0 2.5rem 0 .9rem; color: var(--text); font: inherit; border: 1px solid var(--line); border-radius: .75rem; background: #0d2147; }
+.collection-help { color: var(--muted); line-height: 1.55; margin-bottom: 1.25rem; }
 .collection-meta { display: flex; gap: .6rem; margin-bottom: 1rem; }
 .collection-meta span { padding: .4rem .65rem; color: var(--muted); font-size: .75rem; border: 1px solid var(--line); border-radius: 999px; }
 .retry { display: block; margin: 1rem auto; padding: .7rem 1rem; color: #061226; font: 800 .85rem var(--body); border: 0; border-radius: .65rem; background: var(--accent); cursor: pointer; }
-@media (max-width: 700px) { .collection-heading { grid-template-columns: 1fr; gap: 1rem; } }

@@ -20,10 +20,37 @@
   <div class="printings">
     <div class="printing-heading"><h3>Impresiones</h3><span>{{ card().card_sets?.length || 0 }} registradas</span></div>
     @if (card().card_sets?.length) {
+      <div class="printing-controls">
+        <label>Expansión de esta carta
+          <select [value]="selectedExpansion()" (change)="selectExpansion($event)">
+            <option value="">Todas las expansiones de esta carta</option>
+            @for (expansion of expansions(); track expansion) {
+              <option [value]="expansion">{{ expansion }}</option>
+            }
+          </select>
+        </label>
+        <label>Ordenar impresiones por precio
+          <select [value]="priceOrder()" (change)="selectOrder($event)">
+            <option value="descending">Mayor a menor</option>
+            <option value="ascending">Menor a mayor</option>
+          </select>
+        </label>
+      </div>
+      <div class="highest-price" role="status">
+        <strong>{{ selectedExpansion() ? 'Mayor precio en la expansión seleccionada' : 'Mayor precio entre todas las expansiones de esta carta' }}</strong>
+        @for (printing of mostExpensive(); track $index) {
+          <p>{{ printing.set_name }} · {{ printing.set_code }} · {{ printing.set_rarity }}
+            <b>{{ price(printing) | currency:'USD':'symbol':'1.2-2' }}</b>
+          </p>
+        } @empty {
+          <p>No hay precios válidos disponibles para esta selección.</p>
+        }
+      </div>
+      <p class="price-note">{{ visiblePrintings().length }} impresiones en la selección. Precios de referencia proporcionados por YGOPRODeck, en USD.</p>
       <div class="table-wrap"><table>
         <thead><tr><th>Expansión</th><th>Código</th><th>Rareza</th><th>Precio</th></tr></thead>
-        <tbody>@for (printing of card().card_sets; track printing.set_code + printing.set_rarity) {
-          <tr><td>{{ printing.set_name }}</td><td><code>{{ printing.set_code }}</code></td><td>{{ printing.set_rarity }}</td><td>${{ printing.set_price }}</td></tr>
+        <tbody>@for (printing of visiblePrintings(); track $index) {
+          <tr><td>{{ printing.set_name }}</td><td><code>{{ printing.set_code }}</code></td><td>{{ printing.set_rarity }}</td><td>{{ price(printing) === null ? 'Sin precio' : (price(printing) | currency:'USD':'symbol':'1.2-2') }}</td></tr>
         }</tbody>
       </table></div>
     } @else { <p class="no-printings">No hay impresiones registradas para esta carta.</p> }

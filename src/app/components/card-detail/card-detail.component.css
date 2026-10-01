@@ -16,6 +16,15 @@ h2 { max-width: 18ch; margin: 0; font: 700 clamp(2rem, 5vw, 3.7rem)/.98 var(--di
 .archetype { display: grid; gap: .3rem; margin-top: 1.25rem; padding: .9rem 1rem; border-left: 3px solid var(--accent); background: rgba(74, 163, 255, .08); }
 .archetype span { color: var(--muted); font-size: .72rem; text-transform: uppercase; }
 .printings { margin-top: 2.5rem; }
+.printing-controls { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1rem; margin-bottom: 1rem; }
+.printing-controls label { display: grid; gap: .5rem; color: var(--muted); font-size: .9rem; }
+.printing-controls select { width: 100%; min-width: 0; min-height: 3rem; padding: .65rem; color: var(--text); border: 1px solid var(--line); border-radius: .6rem; background: #0b1e40; }
+.highest-price { padding: 1rem; border-left: 3px solid var(--accent); border-radius: .5rem; background: rgba(74, 163, 255, .08); overflow-wrap: anywhere; }
+.highest-price strong { font-size: 1rem; }
+.highest-price p { margin: .65rem 0 0; color: var(--muted); line-height: 1.55; }
+.highest-price b { display: block; color: var(--accent); font-size: 1.3rem; }
+.price-note { color: var(--muted); font-size: .88rem; line-height: 1.5; }
+@media (max-width: 700px) { .printing-controls { grid-template-columns: 1fr; } }
 .printing-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
 .printing-heading h3 { margin: 0; font: 700 1.5rem var(--display); }
 .printing-heading span { color: var(--muted); font-size: .78rem; }
